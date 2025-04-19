@@ -18,6 +18,9 @@ jobs:
         go-version: '1.24'
         cache: true
 
+    - name: Install revive
+      run: go install github.com/mgechev/revive@latest
+
     - name: Format
       run: make format
 
