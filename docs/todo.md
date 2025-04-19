@@ -4,9 +4,9 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 1. Project Initialization
 
-- [ ] Initialize Go module: `go mod init github.com/you/validator-monitor`
+- [ ] Initialize Go module: `go mod init github.com/zheli/validator-key-manager-backend`
 - [ ] Create folder structure:
-  - [ ] `cmd/validator-monitor`
+  - [ ] `cmd/validator-key-manager`
   - [ ] `internal/`
   - [ ] `pkg/`
   - [ ] `web/`
