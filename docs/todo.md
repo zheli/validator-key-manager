@@ -30,13 +30,13 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 3. Docker Skeleton
 
-- [ ] Write `Dockerfile`:
-  - [ ] Use `golang:1.24` as builder
-  - [ ] Download dependencies and build binary
-  - [ ] Use minimal base (scratch/alpine) with non-root user
-  - [ ] Expose port 8080
-- [ ] Add `Makefile` target `docker-build`
-- [ ] Verify `docker build -t validator-monitor .` succeeds
+- [x] Write `Dockerfile`:
+  - [x] Use `golang:1.24` as builder
+  - [x] Download dependencies and build binary
+  - [x] Use minimal base (scratch/alpine) with non-root user
+  - [x] Expose port 8080
+- [x] Add `Makefile` target `docker-build`
+- [x] Verify `docker build -t validator-key-manager .` succeeds
 
 ## 4. Database Migrations
 
