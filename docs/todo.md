@@ -20,19 +20,18 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 2. CI/CD Configuration
 
-- [ ] Create `.github/workflows/ci.yml`:
-  - [ ] Trigger on `push` and `pull_request`
-  - [ ] Steps: checkout, setup Go 1.21, run `make format`, `make lint`, `make test`
-- [ ] Add status badges to README for:
-  - [ ] Build status
-  - [ ] Test coverage
-  - [ ] Go version
-- [ ] Write a test to assert existence and contents of `ci.yml`
+- [x] Create `.github/workflows/ci.yml`:
+  - [x] Trigger on `push` and `pull_request`
+  - [x] Steps: checkout, setup Go 1.24, run `make format`, `make lint`, `make test`
+- [x] Add status badges to README for:
+  - [x] Build status
+  - [x] Test coverage
+  - [x] Go version
 
 ## 3. Docker Skeleton
 
 - [ ] Write `Dockerfile`:
-  - [ ] Use `golang:1.21` as builder
+  - [ ] Use `golang:1.24` as builder
   - [ ] Download dependencies and build binary
   - [ ] Use minimal base (scratch/alpine) with non-root user
   - [ ] Expose port 8080
