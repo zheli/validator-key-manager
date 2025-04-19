@@ -4,19 +4,19 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 1. Project Initialization
 
-- [ ] Initialize Go module: `go mod init github.com/zheli/validator-key-manager-backend`
-- [ ] Create folder structure:
-  - [ ] `cmd/validator-key-manager`
-  - [ ] `internal/`
-  - [ ] `pkg/`
-  - [ ] `web/`
-- [ ] Add `golangci.yml` with default linter settings
-- [ ] Set up pre-commit hook to run `go fmt` and `golangci-lint run`
-- [ ] Write basic unit tests to verify directory existence
-- [ ] Create `Makefile` targets:
-  - [ ] `format`
-  - [ ] `lint`
-  - [ ] `test`
+- [x] Initialize Go module: `go mod init github.com/zheli/validator-key-manager-backend`
+- [x] Create folder structure:
+  - [x] `cmd/validator-key-manager`
+  - [x] `internal/`
+  - [x] `pkg/`
+  - [x] `web/`
+- [x] Add `revive.toml` with default linter settings
+- [x] Set up pre-commit hook to run `go fmt` and `revive` in`.pre-commit-config.yaml`
+- [x] Write basic unit tests to verify directory existence
+- [x] Create `Makefile` targets:
+  - [x] `format`
+  - [x] `lint`
+  - [x] `test`
 
 ## 2. CI/CD Configuration
 
