@@ -81,11 +81,11 @@ The backend service is responsible for managing validator pubkeys, querying thei
 ---
 
 ## Logging and Monitoring
-- **Audit Logging:** 
+- **Audit Logging:**
   - Actions: import, query, refresh
   - Details: timestamp, action, source IP
 - **Application Logs:** Debug/info/error logs
-- **Monitoring:** 
+- **Monitoring:**
   - Health check endpoints
   - Prometheus metrics for status query durations, error rates, etc.
 
@@ -101,7 +101,7 @@ The backend service is responsible for managing validator pubkeys, querying thei
 
 ## Testing Plan
 - **Unit Tests:** For all services and utility functions
-- **Integration Tests:** 
+- **Integration Tests:**
   - Beacon node responses
   - Validator client detection
 - **CI/CD Pipeline:** GitHub Actions (run on push, test + build + deploy)

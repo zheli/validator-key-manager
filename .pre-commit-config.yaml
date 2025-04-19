@@ -1,0 +1,14 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    - id: detect-private-key
+    - id: detect-aws-credentials
+repos:
+- repo: https://github.com/jumanjihouse/pre-commit-hooks
+  rev: 3.0.0
+  hooks:
+  - id: script-must-have-extension
+  - id: git-dirty
+  - id: git-check
+  - id: forbid-binary

@@ -1,7 +1,7 @@
 # Ethereum/Gnosis Validator Pubkey Monitoring Tool Specification
 
 ## Overview
-This tool is designed to monitor Ethereum and Gnosis validator pubkeys across mainnet and testnet environments. It tracks the status of each pubkey (unused, actively validating, slashed, exited), identifies the validator client in use (Lighthouse or Teku), and, for Lido-specific pubkeys, verifies if they are uploaded to the Lido smart contract. 
+This tool is designed to monitor Ethereum and Gnosis validator pubkeys across mainnet and testnet environments. It tracks the status of each pubkey (unused, actively validating, slashed, exited), identifies the validator client in use (Lighthouse or Teku), and, for Lido-specific pubkeys, verifies if they are uploaded to the Lido smart contract.
 
 The tool supports manual input, file upload, and REST API import for pubkeys and integrates with local beacon nodes for status updates. It is containerized and designed for deployment on a HashiCorp Nomad cluster.
 
@@ -15,7 +15,7 @@ The tool supports manual input, file upload, and REST API import for pubkeys and
 - **CI/CD:** GitHub Actions
 - **Monitoring:** Prometheus (potential integration)
 - **Validator Clients Supported:** Lighthouse, Teku
-- **Blockchain Networks Supported:** 
+- **Blockchain Networks Supported:**
   - Ethereum (Mainnet, Holesky)
   - Gnosis (Mainnet, Testnet)
 
@@ -97,7 +97,7 @@ The tool supports manual input, file upload, and REST API import for pubkeys and
 
 ## Logging and Monitoring
 - **Application Logging:** For debugging and audit purposes
-- **Metrics and Health Checks:** 
+- **Metrics and Health Checks:**
   - Prometheus integration for monitoring tool performance and availability
 
 ---
