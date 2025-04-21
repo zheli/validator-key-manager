@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/zheli/validator-key-manager-backend/internal/db"
 )
 
@@ -20,8 +22,15 @@ func main() {
 	}
 	defer database.Close()
 
-	// Basic health check endpoint
-	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+	// Initialize chi router
+	r := chi.NewRouter()
+
+	// Add middleware
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+
+	// Health check endpoint
+	r.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		if err := database.Ping(); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprintf(w, "Database connection error: %v", err)
@@ -32,7 +41,7 @@ func main() {
 	})
 
 	// Root endpoint
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Validator Key Manager Service")
 	})
 
@@ -42,7 +51,7 @@ func main() {
 	}
 
 	log.Printf("Starting server on :%s", port)
-	if err := http.ListenAndServe(":"+port, nil); err != nil {
+	if err := http.ListenAndServe(":"+port, r); err != nil {
 		log.Fatal(err)
 	}
 }
