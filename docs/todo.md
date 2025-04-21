@@ -70,7 +70,7 @@ Use this checklist to track progress through each development phase. Check items
 - [x] Implement `internal/db`:
   - [x] Ensure we can either load `DATABASE_URL` from environment variable, or a flag.
   - [x] Use `database/sql` for now to keep dependency small and simple.
-  - [x] `func NewDB() (*sqlx.DB, error)` opens and pings DB
+  - [x] `func NewDB() (*sql.DB, error)` opens and pings DB
 - [x] Write unit tests with `sqlmock` for ping success and failure
 - [x] Integrate `NewDB()` into `main.go` for fail-fast startup
 
