@@ -166,3 +166,47 @@ Use this checklist to track progress through each development phase. Check items
 ## 16. Filtering & Frontend API
 
 - [ ] Add GET `/pubkeys` with query params `network`, `status`, `client`
+- [ ] Return filtered list from `repo.List`
+- [ ] Write HTTP tests covering combinations of filters
+- [ ] Scaffold React app endpoint and dark mode toggle
+
+## 17. Audit Logging Middleware
+
+- [ ] Create `pkg/middleware/audit.go`:
+  - [ ] Capture timestamp, action (HTTP method + path), source IP
+  - [ ] Log to stdout or file
+- [ ] Write unit tests verifying log output contains required fields
+- [ ] Integrate middleware into router chain
+
+## 18. Prometheus Metrics
+
+- [ ] Instrument HTTP handlers with `promhttp` middleware
+- [ ] Expose `/metrics` endpoint
+- [ ] Write integration test to fetch `/metrics` and verify counters exist
+
+## 19. Authentication & Authorization
+
+- [ ] Implement Google SSO authentication for the frontend (React)
+  - [ ] Integrate `react-oauth/google` or similar package
+  - [ ] Store ID token in secure frontend storage
+- [ ] Set up backend middleware to validate Google ID token
+  - [ ] Use `google.golang.org/api/idtoken` to verify tokens
+  - [ ] Extract and log email, associate with request context
+- [ ] Secure REST endpoints using authentication middleware
+  - [ ] Return 401 for unauthenticated requests
+  - [ ] Allow whitelisted internal services via API keys or service tokens
+- [ ] Write tests for middleware behavior:
+  - [ ] Valid user token
+  - [ ] Expired/invalid token
+  - [ ] Internal service key
+
+## 20. Deployment & Nomad
+
+- [ ] Write `nomad.hcl` job spec:
+  - [ ] Docker task using built image
+  - [ ] Environment variables for DB, beacon node endpoints, etc.
+- [ ] Create smoke test script:
+  - [ ] Start local Postgres via testcontainers
+  - [ ] Launch Nomad dev agent
+  - [ ] Deploy job and verify `/healthz`
+- [ ] Integrate smoke test into CI
