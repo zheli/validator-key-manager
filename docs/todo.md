@@ -76,11 +76,11 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 6. Health Check Endpoint
 
-- [ ] Set up `chi` router in `cmd/validator-monitor/main.go`
-- [ ] Mount `GET /healthz`:
-  - [ ] Ping database
-  - [ ] Respond `200 OK` with body `ok` or `500` on failure
-- [ ] Write HTTP tests using `httptest` (mock DB behavior)
+- [x] Set up `chi` router in `cmd/validator-monitor/main.go`
+- [x] Mount `GET /healthz`:
+  - [x] Ping database
+  - [x] Respond `200 OK` with body `ok` or `500` on failure
+- [x] Write HTTP tests using `httptest` (mock DB behavior)
 
 ## 7. Validator Model & Repository Interface
 
