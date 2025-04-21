@@ -68,7 +68,7 @@ Use this checklist to track progress through each development phase. Check items
 ## 5. Database Connection Package
 
 - [ ] Implement `internal/db`:
-  - [ ] Load `DATABASE_URL` from environment
+  - [ ] Ensure we can either load `DATABASE_URL` from environment variable, a flag or a .env file.
   - [ ] `func NewDB() (*sqlx.DB, error)` opens and pings DB
 - [ ] Write unit tests with `sqlmock` for ping success and failure
 - [ ] Integrate `NewDB()` into `main.go` for fail-fast startup
