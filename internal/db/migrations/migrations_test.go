@@ -4,8 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"os"
-	"path/filepath"
 	"testing"
 	"time"
 
@@ -36,17 +34,6 @@ const (
 func TestMigrations(t *testing.T) {
 	ctx := context.Background()
 
-	// Create a temporary migrations directory
-	tmpMigrationsDir := t.TempDir()
-
-	// Create migration files
-	err := os.WriteFile(filepath.Join(tmpMigrationsDir, "0001_create_validators.up.sql"), []byte(migrationUpSQL), 0644)
-	require.NoError(t, err)
-	err = os.WriteFile(filepath.Join(tmpMigrationsDir, "0001_create_validators.down.sql"), []byte(migrationDownSQL), 0644)
-	require.NoError(t, err)
-
-	migrationsURL := fmt.Sprintf("file://%s", tmpMigrationsDir)
-
 	dbName := "postgres"
 	dbUser := "postgres"
 	dbPassword := "postgres"
@@ -54,7 +41,6 @@ func TestMigrations(t *testing.T) {
 	// Start PostgreSQL container
 	postgresContainer, err := postgres.Run(ctx,
 		"postgres:16-alpine",
-		postgres.WithConfigFile(filepath.Join("testdata", "my-postgres.conf")),
 		postgres.WithUsername(dbUser),
 		postgres.WithPassword(dbPassword),
 		testcontainers.WithWaitStrategy(
@@ -90,7 +76,7 @@ func TestMigrations(t *testing.T) {
 
 	// Run migrations
 	m, err := migrate.New(
-		migrationsURL,
+		"file://../../../migrations",
 		dbURL,
 	)
 	require.NoError(t, err)

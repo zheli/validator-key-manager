@@ -40,9 +40,9 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 4. Database Migrations
 
-- [ ] Add `migrate` as dev dependency
-- [ ] Create migration `migrations/0001_create_validators.sql`:
-  - [ ] `validators` table with columns:
+- [x] Add `migrate` as dev dependency
+- [x] Create migration files for migration up and down
+  - [x] `validators` table with columns:
     - `id SERIAL PRIMARY KEY`
     - `pubkey TEXT UNIQUE NOT NULL`
     - `blockchain TEXT NOT NULL`
@@ -51,12 +51,10 @@ Use this checklist to track progress through each development phase. Check items
     - `client TEXT`
     - `created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()`
     - `updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()`
-- [ ] Write integration test using `testcontainers` to test `migrate` command with `postgres` container. Use the new syntax like this one:
+- [x] Write integration test using `testcontainers` to test `migrate` command with `postgres` container. Use the new syntax like this one:
   ```
   postgresContainer, err := postgres.Run(ctx,
       "postgres:16-alpine",
-      postgres.WithInitScripts(filepath.Join("testdata", "init-user-db.sh")),
-      postgres.WithConfigFile(filepath.Join("testdata", "my-postgres.conf")),
       postgres.WithDatabase(dbName),
       postgres.WithUsername(dbUser),
       postgres.WithPassword(dbPassword),

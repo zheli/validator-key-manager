@@ -9,6 +9,3 @@ CREATE TABLE IF NOT EXISTS validators (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
-
--- +migrate Down
-DROP TABLE IF EXISTS validators;
