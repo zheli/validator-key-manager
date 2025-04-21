@@ -51,7 +51,21 @@ Use this checklist to track progress through each development phase. Check items
     - `client TEXT`
     - `created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()`
     - `updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()`
-- [ ] Write integration test using `testcontainers` to run `migrate -database postgres://postgres:postgres@localhost:5432/postgres -path migrations/ up`
+- [ ] Write integration test using `testcontainers` to test `migrate` command with `postgres` container. Use the new syntax like this one:
+  ```
+  postgresContainer, err := postgres.Run(ctx,
+      "postgres:16-alpine",
+      postgres.WithInitScripts(filepath.Join("testdata", "init-user-db.sh")),
+      postgres.WithConfigFile(filepath.Join("testdata", "my-postgres.conf")),
+      postgres.WithDatabase(dbName),
+      postgres.WithUsername(dbUser),
+      postgres.WithPassword(dbPassword),
+      testcontainers.WithWaitStrategy(
+          wait.ForLog("database system is ready to accept connections").
+              WithOccurrence(2).
+              WithStartupTimeout(5*time.Second)),
+  )
+  ```
 
 ## 5. Database Connection Package
 
