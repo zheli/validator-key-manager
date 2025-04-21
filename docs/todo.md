@@ -67,12 +67,12 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 5. Database Connection Package
 
-- [ ] Implement `internal/db`:
-  - [ ] Ensure we can either load `DATABASE_URL` from environment variable, or a flag.
-  - [ ] Use `database/sql` for now to keep dependency small and simple.
-  - [ ] `func NewDB() (*sqlx.DB, error)` opens and pings DB
-- [ ] Write unit tests with `sqlmock` for ping success and failure
-- [ ] Integrate `NewDB()` into `main.go` for fail-fast startup
+- [x] Implement `internal/db`:
+  - [x] Ensure we can either load `DATABASE_URL` from environment variable, or a flag.
+  - [x] Use `database/sql` for now to keep dependency small and simple.
+  - [x] `func NewDB() (*sqlx.DB, error)` opens and pings DB
+- [x] Write unit tests with `sqlmock` for ping success and failure
+- [x] Integrate `NewDB()` into `main.go` for fail-fast startup
 
 ## 6. Health Check Endpoint
 
@@ -166,35 +166,3 @@ Use this checklist to track progress through each development phase. Check items
 ## 16. Filtering & Frontend API
 
 - [ ] Add GET `/pubkeys` with query params `network`, `status`, `client`
-- [ ] Return filtered list from `repo.List`
-- [ ] Write HTTP tests covering combinations of filters
-- [ ] Scaffold React app endpoint and dark mode toggle
-
-## 17. Audit Logging Middleware
-
-- [ ] Create `pkg/middleware/audit.go`:
-  - [ ] Capture timestamp, action (HTTP method + path), source IP
-  - [ ] Log to stdout or file
-- [ ] Write unit tests verifying log output contains required fields
-- [ ] Integrate middleware into router chain
-
-## 18. Prometheus Metrics
-
-- [ ] Instrument HTTP handlers with `promhttp` middleware
-- [ ] Expose `/metrics` endpoint
-- [ ] Write integration test to fetch `/metrics` and verify counters exist
-
-## 19. Deployment & Nomad
-
-- [ ] Write `nomad.hcl` job spec:
-  - [ ] Docker task using built image
-  - [ ] Environment variables for DB, beacon node endpoints, etc.
-- [ ] Create smoke test script:
-  - [ ] Start local Postgres via testcontainers
-  - [ ] Launch Nomad dev agent
-  - [ ] Deploy job and verify `/healthz`
-- [ ] Integrate smoke test into CI
-
----
-
-Once complete, all features will be implemented incrementally, with full test coverage and safe integration at each stage.
