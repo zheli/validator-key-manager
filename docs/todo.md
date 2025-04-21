@@ -84,14 +84,14 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 7. Validator Model & Repository Interface
 
-- [ ] Define `pkg/models/validator.go` with `Validator` struct
-- [ ] Create `ValidatorRepo` interface:
-  - [ ] `Create(ctx, v *Validator) error`
-  - [ ] `GetByPubkey(ctx, pubkey string) (*Validator, error)`
-  - [ ] `List(ctx, filters map[string]interface{}) ([]Validator, error)`
-  - [ ] `UpdateStatus(ctx, pubkey, status string) error`
-- [ ] Generate `mockValidatorRepo` via `mockgen`
-- [ ] Write tests to confirm mock implements the interface
+- [x] Define `pkg/models/validator.go` with `Validator` struct
+- [x] Create `ValidatorRepo` interface:
+  - [x] `Create(ctx, v *Validator) error`
+  - [x] `GetByPubkey(ctx, pubkey string) (*Validator, error)`
+  - [x] `List(ctx, filters map[string]interface{}) ([]Validator, error)`
+  - [x] `UpdateStatus(ctx, pubkey, status string) error`
+- [x] Generate `mockValidatorRepo` via `mockgen`
+- [x] Write tests to confirm mock implements the interface
 
 ## 8. Repository Implementation with sqlx
 
