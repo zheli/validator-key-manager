@@ -40,17 +40,18 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 4. Database Migrations
 
-- [ ] Add `goose` as dev dependency
+- [ ] Add `migrate` as dev dependency
 - [ ] Create migration `migrations/0001_create_validators.sql`:
   - [ ] `validators` table with columns:
     - `id SERIAL PRIMARY KEY`
     - `pubkey TEXT UNIQUE NOT NULL`
-    - `network TEXT NOT NULL`
+    - `blockchain TEXT NOT NULL`
+    - `blockchian_network TEXT NOT NULL`
     - `status TEXT NOT NULL`
     - `client TEXT`
     - `created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()`
     - `updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()`
-- [ ] Write integration test using `testcontainers` to run `goose up/down`
+- [ ] Write integration test using `testcontainers` to run `migrate -database postgres://postgres:postgres@localhost:5432/postgres -path migrations/ up`
 
 ## 5. Database Connection Package
 
