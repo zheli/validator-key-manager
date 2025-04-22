@@ -93,14 +93,14 @@ Use this checklist to track progress through each development phase. Check items
 - [x] Generate `mockValidatorRepo` via `mockgen`
 - [x] Write tests to confirm mock implements the interface
 
-## 8. Repository Implementation with sqlx
+## 8. Repository Implementation with sql
 
-- [ ] Implement `validator_repo.go` in `internal/db/repo`
-- [ ] SQL for CRUD operations with parameter bindings
-- [ ] Handle duplicate errors in `Create`
-- [ ] Return `sql.ErrNoRows` for missing entries in `GetByPubkey`
-- [ ] Write unit tests with `sqlmock` verifying queries and args
-- [ ] Wire repo into `pkg/service.NewValidatorService`
+- [x] Implement `validator_repo.go` in `internal/db/repo`
+- [x] SQL for CRUD operations with parameter bindings
+- [x] Handle duplicate errors in `Create`
+- [x] Return `sql.ErrNoRows` for missing entries in `GetByPubkey`
+- [x] Write unit tests with `sqlmock` verifying queries and args
+- [x] Wire repo into `pkg/service.NewValidatorService`
 
 ## 9. Pubkey Validation Logic
 
