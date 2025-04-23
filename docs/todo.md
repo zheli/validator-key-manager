@@ -104,8 +104,9 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 9. Pubkey Validation Logic
 
+- [ ] Use an existing module/library to validate Ethereum public key format
 - [ ] Implement `ValidatePubkeyFormat(pubkey string) error` in `pkg/validator`
-- [ ] Implement `CheckDuplicate(ctx, repo, pubkey) error`
+- [ ] Add `CheckDuplicate(ctx, repo, pubkey)` to service layer (requires DB)
 - [ ] Write table-driven tests for: invalid length, non-hex chars, duplicates
 - [ ] Prepare for integration into REST handlers
 
@@ -113,7 +114,7 @@ Use this checklist to track progress through each development phase. Check items
 
 - [ ] In `web` layer, add POST `/pubkeys` handler:
   - [ ] Parse JSON input `{ "pubkey": "0x..." }`
-  - [ ] Validate format and duplicates
+  - [ ] Validate format and check for duplicates via service
   - [ ] Call `repo.Create` and return created record
 - [ ] Write HTTP tests for:
   - [ ] Success case
@@ -186,19 +187,11 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 19. Authentication & Authorization
 
-- [ ] Implement Google SSO authentication for the frontend (React)
-  - [ ] Integrate `react-oauth/google` or similar package
-  - [ ] Store ID token in secure frontend storage
-- [ ] Set up backend middleware to validate Google ID token
-  - [ ] Use `google.golang.org/api/idtoken` to verify tokens
-  - [ ] Extract and log email, associate with request context
-- [ ] Secure REST endpoints using authentication middleware
-  - [ ] Return 401 for unauthenticated requests
-  - [ ] Allow whitelisted internal services via API keys or service tokens
-- [ ] Write tests for middleware behavior:
-  - [ ] Valid user token
-  - [ ] Expired/invalid token
-  - [ ] Internal service key
+- [ ] Implement Google SSO integration for frontend authentication
+- [ ] Add middleware to check authenticated requests for internal APIs
+- [ ] Generate and verify JWT or session cookies for authenticated users
+- [ ] Allow both frontend and internal services to call backend API with appropriate access
+- [ ] Write unit and integration tests for SSO flow and protected endpoints
 
 ## 20. Deployment & Nomad
 
