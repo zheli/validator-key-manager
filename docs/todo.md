@@ -104,10 +104,10 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 9. Pubkey Validation Logic
 
-- [ ] Implement `ValidatePubkeyFormat(pubkey string) error` in `pkg/validator`
-- [ ] Add `CheckDuplicate(ctx, repo, pubkey)` to service layer (requires DB)
-- [ ] Write table-driven tests for: invalid length, non-hex chars, duplicates
-- [ ] Prepare for integration into REST handlers
+- [x] Implement `ValidatePubkeyFormat(pubkey string) error` in `pkg/validator`
+- [x] Add `CheckDuplicate(ctx, repo, pubkey)` to service layer (requires DB)
+- [x] Write table-driven tests for: invalid length, non-hex chars, duplicates. Use consistent mocking approach (use generated mocks from mockgen)
+- [x] Prepare for integration into REST handlers
 
 ## 10. REST Handlers: Pubkey Intake
 

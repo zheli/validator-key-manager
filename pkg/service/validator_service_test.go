@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"testing"
 	"time"
 
@@ -104,4 +105,62 @@ func TestValidatorService_UpdateValidatorStatus(t *testing.T) {
 
 	err := service.UpdateValidatorStatus(ctx, "0x123", "inactive")
 	assert.NoError(t, err)
+}
+
+func TestCheckDuplicate(t *testing.T) {
+	tests := []struct {
+		name          string
+		pubkey        string
+		mockSetup     func(*gomock.Controller) *mocks.MockValidatorRepo
+		expectedError error
+	}{
+		{
+			name:   "pubkey exists",
+			pubkey: "0x1234",
+			mockSetup: func(ctrl *gomock.Controller) *mocks.MockValidatorRepo {
+				mockRepo := mocks.NewMockValidatorRepo(ctrl)
+				mockRepo.EXPECT().GetByPubkey(gomock.Any(), "0x1234").Return(&models.Validator{}, nil)
+				return mockRepo
+			},
+			expectedError: errors.New("pubkey already exists"),
+		},
+		{
+			name:   "pubkey does not exist",
+			pubkey: "0x1234",
+			mockSetup: func(ctrl *gomock.Controller) *mocks.MockValidatorRepo {
+				mockRepo := mocks.NewMockValidatorRepo(ctrl)
+				mockRepo.EXPECT().GetByPubkey(gomock.Any(), "0x1234").Return(nil, models.ErrNotFound)
+				return mockRepo
+			},
+			expectedError: nil,
+		},
+		{
+			name:   "database error",
+			pubkey: "0x1234",
+			mockSetup: func(ctrl *gomock.Controller) *mocks.MockValidatorRepo {
+				mockRepo := mocks.NewMockValidatorRepo(ctrl)
+				mockRepo.EXPECT().GetByPubkey(gomock.Any(), "0x1234").Return(nil, errors.New("database error"))
+				return mockRepo
+			},
+			expectedError: errors.New("database error"),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			defer ctrl.Finish()
+
+			mockRepo := tt.mockSetup(ctrl)
+			service := NewValidatorService(mockRepo)
+
+			err := service.CheckDuplicate(context.Background(), tt.pubkey)
+			if tt.expectedError != nil {
+				assert.Error(t, err)
+				assert.Equal(t, tt.expectedError.Error(), err.Error())
+			} else {
+				assert.NoError(t, err)
+			}
+		})
+	}
 }

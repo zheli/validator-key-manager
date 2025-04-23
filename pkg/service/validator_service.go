@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/zheli/validator-key-manager-backend/pkg/models"
 )
@@ -34,4 +35,18 @@ func (s *ValidatorService) ListValidators(ctx context.Context, filters map[strin
 // UpdateValidatorStatus updates the status of a validator
 func (s *ValidatorService) UpdateValidatorStatus(ctx context.Context, pubkey, status string) error {
 	return s.repo.UpdateStatus(ctx, pubkey, status)
+}
+
+// CheckDuplicate checks if a pubkey already exists in the database
+// Returns nil if the pubkey doesn't exist, or an error if it does
+func (s *ValidatorService) CheckDuplicate(ctx context.Context, pubkey string) error {
+	_, err := s.repo.GetByPubkey(ctx, pubkey)
+	if err == nil {
+		return errors.New("pubkey already exists")
+	}
+	// If the error is not sql.ErrNoRows, it's a real error
+	if err != nil && !errors.Is(err, models.ErrNotFound) {
+		return err
+	}
+	return nil
 }
