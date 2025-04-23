@@ -104,29 +104,29 @@ Use this checklist to track progress through each development phase. Check items
 ## 9. Pubkey Validation Logic
 
 - [x] Implement `ValidatePubkeyFormat(pubkey string) error` in `pkg/validator`
-- [x] Add `CheckDuplicate(ctx, repo, pubkey)` to service layer (requires DB)
 - [x] Write table-driven tests for: invalid length, non-hex chars, duplicates. Use consistent mocking approach (use generated mocks from mockgen)
 - [x] Prepare for integration into REST handlers
 
-## 10. REST Handlers: Add validator pubkey
+## 10. REST Handlers: Validator Intake
 
-- [ ] In `internal/handlers`, add POST `/validators` handler:
-  - [ ] Accept array of pubkey entries, each containing:
-    - `pubkey`
-    - `blockchain`: "ethereum" or "gnosis"
-    - `network`: "ethereum", "holesky", "chiado", or "gnosis"
-    - `mainnet`: true/false
-    - `note`: optional text field
-  - [ ] Max 1000 pubkeys per request, if more than 1000, return 400 error
-  - [ ] Validate format and duplicates
-  - [ ] Create all valid entries in DB (in parallel where possible)
-  - [ ] Respond within 30s using concurrency best practices
+- [ ] In `internal` folder, add POST `/validators` handler:
+  - [ ] Accept JSON array of up to 1000 objects:
+    - `pubkey` (string)
+    - `blockchain` (e.g. ethereum, gnosis)
+    - `network` (e.g. mainnet, holesky, chiado)
+    - `is_testnet` (boolean)
+    - `note` (optional string)
+  - [ ] Validate Ethereum public key format
+  - [ ] Validate array length <= 1000
+  - [ ] Insert into DB in parallel using goroutines with context timeout (30s max)
+  - [ ] Gracefully handle duplicate pubkey errors
+  - [ ] Return summary JSON: success and failed inserts
 - [ ] Write HTTP tests for:
-  - [ ] Success case with multiple pubkeys
-  - [ ] Format and validation errors
-  - [ ] Exceeding max count
-  - [ ] Partial success/failure handling
-- [ ] Wire handler into `main.go`
+  - [ ] Valid input under 1000
+  - [ ] More than 1000 pubkeys
+  - [ ] Timeout scenarios
+  - [ ] Format and DB error handling
+- [ ] Ensure handler is wired in `main.go`
 
 ## 11. File Upload Endpoint
 
@@ -171,10 +171,9 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 16. Filtering & Frontend API
 
-- [ ] Add GET `/pubkeys` with query params `network`, `status`, `client`
+- [ ] Add GET `/validators` with query params `network`, `status`, `client`
 - [ ] Return filtered list from `repo.List`
 - [ ] Write HTTP tests covering combinations of filters
-- [ ] Scaffold React app endpoint and dark mode toggle
 
 ## 17. Audit Logging Middleware
 
@@ -190,7 +189,16 @@ Use this checklist to track progress through each development phase. Check items
 - [ ] Expose `/metrics` endpoint
 - [ ] Write integration test to fetch `/metrics` and verify counters exist
 
-## 19. Deployment & Nomad
+## 19. Authentication and Authorization
+
+- [ ] Add middleware to authenticate API requests
+- [ ] Support two modes:
+  - [ ] Google SSO for frontend users
+  - [ ] API key-based for internal service calls
+- [ ] Secure endpoints requiring identity or service access
+- [ ] Write unit and integration tests for both auth flows
+
+## 20. Deployment & Nomad
 
 - [ ] Write `nomad.hcl` job spec:
   - [ ] Docker task using built image
@@ -200,11 +208,3 @@ Use this checklist to track progress through each development phase. Check items
   - [ ] Launch Nomad dev agent
   - [ ] Deploy job and verify `/healthz`
 - [ ] Integrate smoke test into CI
-
-## 20. Authentication & Authorization
-
-- [ ] Add Google SSO support for frontend users
-- [ ] Design token-based internal service authentication
-- [ ] Middleware to validate tokens and attach user/service context
-- [ ] Protect API endpoints with appropriate authentication
-- [ ] Write tests for middleware and endpoint protection
