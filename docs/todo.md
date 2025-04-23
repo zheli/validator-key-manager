@@ -110,16 +110,29 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 10. REST Handlers: Add validator pubkey
 
-- [ ] add POST `/validators` handler:
-  - [ ] Parse JSON input `{ "pubkey": "0x..." }`
-  - [ ] Validate format and check for duplicates via service
-  - [ ] Call `repo.Create` and return created record
+- [ ] Add POST `/validators` handler:
+  - [ ] Accept JSON input:
+    ```json
+    [
+      {
+        "pubkey": "0x...",
+        "blockchain": "ethereum" | "gnosis",
+        "network": "mainnet" | "holesky" | "chiado",
+        "is_testnet": true | false,
+        "note": "optional note"
+      },
+      ...
+    ]
+    ```
+  - [ ] Validate each pubkey's format and uniqueness
+  - [ ] Call `repo.Create` for each valid entry
+  - [ ] Return structured summary of successes and failures per entry
 - [ ] Write HTTP tests for:
-  - [ ] Success case
-  - [ ] Invalid format
+  - [ ] Batch success
+  - [ ] Mixed valid/invalid
   - [ ] Duplicate error
   - [ ] DB errors
-- [ ] Ensure wiring in `main.go`
+- [ ] Ensure handler is wired into `main.go`
 
 ## 11. File Upload Endpoint
 
@@ -183,13 +196,13 @@ Use this checklist to track progress through each development phase. Check items
 - [ ] Expose `/metrics` endpoint
 - [ ] Write integration test to fetch `/metrics` and verify counters exist
 
-## 19. Authentication & Authorization
+## 19. Authentication and Authorization
 
-- [ ] Implement Google SSO integration for frontend authentication
-- [ ] Add middleware to check authenticated requests for internal APIs
-- [ ] Generate and verify JWT or session cookies for authenticated users
-- [ ] Allow both frontend and internal services to call backend API with appropriate access
-- [ ] Write unit and integration tests for SSO flow and protected endpoints
+- [ ] Add support for API authentication and authorization
+- [ ] Frontend authentication via Google SSO
+- [ ] Internal service calls authenticated via shared secrets or API keys
+- [ ] Middleware to extract and verify auth token from headers
+- [ ] Write unit and integration tests for auth paths
 
 ## 20. Deployment & Nomad
 
