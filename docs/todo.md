@@ -110,29 +110,23 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 10. REST Handlers: Add validator pubkey
 
-- [ ] Add POST `/validators` handler:
-  - [ ] Accept JSON input:
-    ```json
-    [
-      {
-        "pubkey": "0x...",
-        "blockchain": "ethereum" | "gnosis",
-        "network": "mainnet" | "holesky" | "chiado",
-        "is_testnet": true | false,
-        "note": "optional note"
-      },
-      ...
-    ]
-    ```
-  - [ ] Validate each pubkey's format and uniqueness
-  - [ ] Call `repo.Create` for each valid entry
-  - [ ] Return structured summary of successes and failures per entry
+- [ ] In `internal/handlers`, add POST `/validators` handler:
+  - [ ] Accept array of pubkey entries, each containing:
+    - `pubkey`
+    - `blockchain`: "ethereum" or "gnosis"
+    - `network`: "ethereum", "holesky", "chiado", or "gnosis"
+    - `mainnet`: true/false
+    - `note`: optional text field
+  - [ ] Max 1000 pubkeys per request, if more than 1000, return 400 error
+  - [ ] Validate format and duplicates
+  - [ ] Create all valid entries in DB (in parallel where possible)
+  - [ ] Respond within 30s using concurrency best practices
 - [ ] Write HTTP tests for:
-  - [ ] Batch success
-  - [ ] Mixed valid/invalid
-  - [ ] Duplicate error
-  - [ ] DB errors
-- [ ] Ensure handler is wired into `main.go`
+  - [ ] Success case with multiple pubkeys
+  - [ ] Format and validation errors
+  - [ ] Exceeding max count
+  - [ ] Partial success/failure handling
+- [ ] Wire handler into `main.go`
 
 ## 11. File Upload Endpoint
 
@@ -196,15 +190,7 @@ Use this checklist to track progress through each development phase. Check items
 - [ ] Expose `/metrics` endpoint
 - [ ] Write integration test to fetch `/metrics` and verify counters exist
 
-## 19. Authentication and Authorization
-
-- [ ] Add support for API authentication and authorization
-- [ ] Frontend authentication via Google SSO
-- [ ] Internal service calls authenticated via shared secrets or API keys
-- [ ] Middleware to extract and verify auth token from headers
-- [ ] Write unit and integration tests for auth paths
-
-## 20. Deployment & Nomad
+## 19. Deployment & Nomad
 
 - [ ] Write `nomad.hcl` job spec:
   - [ ] Docker task using built image
@@ -214,3 +200,11 @@ Use this checklist to track progress through each development phase. Check items
   - [ ] Launch Nomad dev agent
   - [ ] Deploy job and verify `/healthz`
 - [ ] Integrate smoke test into CI
+
+## 20. Authentication & Authorization
+
+- [ ] Add Google SSO support for frontend users
+- [ ] Design token-based internal service authentication
+- [ ] Middleware to validate tokens and attach user/service context
+- [ ] Protect API endpoints with appropriate authentication
+- [ ] Write tests for middleware and endpoint protection
