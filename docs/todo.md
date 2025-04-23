@@ -9,7 +9,6 @@ Use this checklist to track progress through each development phase. Check items
   - [x] `cmd/validator-key-manager`
   - [x] `internal/`
   - [x] `pkg/`
-  - [x] `web/`
 - [x] Add `revive.toml` with default linter settings
 - [x] Set up pre-commit hook to run `go fmt` and `revive` in`.pre-commit-config.yaml`
 - [x] Write basic unit tests to verify directory existence
@@ -109,9 +108,9 @@ Use this checklist to track progress through each development phase. Check items
 - [x] Write table-driven tests for: invalid length, non-hex chars, duplicates. Use consistent mocking approach (use generated mocks from mockgen)
 - [x] Prepare for integration into REST handlers
 
-## 10. REST Handlers: Pubkey Intake
+## 10. REST Handlers: Add validator pubkey
 
-- [ ] In `web` layer, add POST `/pubkeys` handler:
+- [ ] add POST `/validators` handler:
   - [ ] Parse JSON input `{ "pubkey": "0x..." }`
   - [ ] Validate format and check for duplicates via service
   - [ ] Call `repo.Create` and return created record
