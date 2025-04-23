@@ -119,7 +119,7 @@ Use this checklist to track progress through each development phase. Check items
   - [ ] Validate Ethereum public key format
   - [ ] Validate array length <= 1000
   - [ ] Insert into DB in parallel using goroutines with context timeout (30s max)
-  - [ ] Gracefully handle duplicate pubkey errors
+  - [ ] Make sure the pubkey is unique in the DB and gracefully handle duplicate pubkey errors
   - [ ] Return summary JSON: success and failed inserts
 - [ ] Write HTTP tests for:
   - [ ] Valid input under 1000
