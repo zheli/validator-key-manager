@@ -104,7 +104,6 @@ Use this checklist to track progress through each development phase. Check items
 
 ## 9. Pubkey Validation Logic
 
-- [ ] Use an existing module/library to validate Ethereum public key format
 - [ ] Implement `ValidatePubkeyFormat(pubkey string) error` in `pkg/validator`
 - [ ] Add `CheckDuplicate(ctx, repo, pubkey)` to service layer (requires DB)
 - [ ] Write table-driven tests for: invalid length, non-hex chars, duplicates
